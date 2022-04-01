@@ -1,0 +1,73 @@
+.optionGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    border-radius: 100px;
+    position: relative;
+    z-index: 1;
+    & > * {
+        padding: 21px 157px 21px 157px;
+        flex: 1 1 0px;
+    }
+    &.isIncorrect {
+        border: 2px solid #f9d29f;
+        .option.isSelected {
+            color: #9f938b;
+        }
+
+        &::before {
+            background-color: #f8caa3;
+        }
+    }
+    &.isPartialCorrect {
+        border: 2px solid #ffffff;
+        .option.isSelected {
+            color: #e47958;
+        }
+
+        &::before {
+            background-color: #f2cbbd;
+        }
+    }
+    &.isCorrect {
+        border: 2px solid #fbfbfb;
+        .option.isSelected {
+            color: white;
+        }
+
+        &::before {
+            background-color: #a5e7e2;
+        }
+    }
+
+    .option {
+        border-radius: 100px;
+        color: #ffffff;
+        background-color: inherit;
+        z-index: 100;
+        border: 0;
+    }
+
+    &::before {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        border-radius: 100px;
+        content: "";
+        z-index: -1;
+        width: 50%;
+        height: 100%;
+        background-color: inherit;
+    }
+
+    &.isFirst::before{
+        transition: transform .2s linear;
+        transform: translateX(0%);
+    }
+    &.isSecond::before {
+        transition: transform .2s linear;
+        transform: translateX(100%);
+    }
+}

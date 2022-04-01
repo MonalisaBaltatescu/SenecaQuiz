@@ -1,0 +1,22 @@
+.quizContainer {
+    display: flex;
+    flex-direction: column;
+    width: 1280px;
+    height: 720px;
+    border: 2px solid black;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    &.isIncorrect {
+        background: linear-gradient(180deg, #F6B868 0%, #EE6B2D 100%);
+    }
+
+    &.isPartialCorrect {
+        background: linear-gradient(180deg, #F1B496 0%, #EA806A 100%);
+    }
+
+    &.isCorrect {
+        background: linear-gradient(180deg, #76E0C2 0%, #59CADA 100%);
+    }
+}
