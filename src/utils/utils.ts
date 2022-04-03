@@ -1,7 +1,7 @@
 import { IQuestion } from "../models/IQuestion";
 import { ISliderPosition } from "../models/ISliderPosition";
 
-export class utils {
+export class Utils {
     public static getSliderPosition(index: number): ISliderPosition {
         switch (index) {
             case 0: return ISliderPosition.First;

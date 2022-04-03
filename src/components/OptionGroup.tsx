@@ -3,7 +3,7 @@ import { IOptionGroup } from "../models/IOptionGroup";
 import { IOverallResult } from "../models/IOverallResult";
 import { ISliderPosition } from "../models/ISliderPosition";
 import styles from "../styles/OptionGroup.module.scss";
-import { utils } from "../utils/utils";
+import { Utils } from "../utils/Utils";
 
 interface IOptionGroupProps {
     optionGroup: IOptionGroup;
@@ -13,20 +13,22 @@ interface IOptionGroupProps {
 }
 
 const OptionGroup = (props: IOptionGroupProps) => {
-
-    const [currentOptionGroup, setCurrentOptionGroup] = useState<IOptionGroup>({options: [], selectedOption: "", correctOption: ""});
+    const [currentOptionGroup, setCurrentOptionGroup] = useState<IOptionGroup>({ options: [], selectedOption: "", correctOption: "" });
     const [currentSelectedPosition, setCurrentSelectedPosition] = useState<ISliderPosition>();
 
     useEffect(() => {
         setCurrentOptionGroup(props.optionGroup);
+    }, [props.optionGroup]);
+
+    useEffect(() => {
         if (props.isNextQuestion) {
             setCurrentSelectedPosition(undefined);
         }
-    }, [props.optionGroup, props.isNextQuestion]);
+    }, [props.isNextQuestion])
 
     const handleOptionChange = (option: string, index: number) => {
         const optionGroup: IOptionGroup = { ...currentOptionGroup, selectedOption: option };
-        setCurrentSelectedPosition(utils.getSliderPosition(index));
+        setCurrentSelectedPosition(Utils.getSliderPosition(index));
         props.onOptionSelected({ ...optionGroup, selectedOption: option });
     };
 

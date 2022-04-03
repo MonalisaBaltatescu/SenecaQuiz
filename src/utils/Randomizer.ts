@@ -1,10 +1,10 @@
 import { IQuestion } from "../models/IQuestion";
 import { IQuiz } from "../models/IQuiz";
 import { IQuizStatus } from "../models/IQuizStatus";
-import { utils } from "./utils";
+import { Utils } from "./Utils";
 
 export class Randomizer {
-    private allQuestions: IQuestion[] = utils.getQuestions();
+    private allQuestions: IQuestion[] = Utils.getQuestions();
     private remainingQuestions: IQuestion[] = this.allQuestions;
 
     public getRandomQuiz(): IQuiz {

@@ -48,7 +48,6 @@ const AnswerPanel = (props: IAnswerProps) => {
 
         computeOverallResult(optionGroupsToUpdate);
         setCurrentOptionGroups(optionGroupsToUpdate);
-
     }
 
     return (

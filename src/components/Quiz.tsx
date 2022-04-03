@@ -36,7 +36,6 @@ const Quiz = () => {
             ? <p>Sorry! No questions for today.</p>
             : <p>Congratulations! </p>
     } else {
-
         return (
             <div className={`${styles.quizContainer} ${styles[overallResult]}`}>
                 <Question text={quizState.currentQuestion.question} />

@@ -114,10 +114,11 @@
     .optionGroup {
         flex-direction: column;
         border-radius: 12px;
+
         &::before {
-           
             border-radius: 6px;
         }
+        
         &.isIncorrect,
         &.isPartialCorrect,
         &.isCorrect {
