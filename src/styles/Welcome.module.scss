@@ -1,0 +1,12 @@
+.acceptChallange {
+    padding: 8px;
+    border-radius: 100px;
+    min-width: 100px;
+    border: 0;
+    background: #A5E7E2;
+    cursor: pointer;
+    
+    &:first-of-type {
+        margin-right: 10px;
+    }
+}

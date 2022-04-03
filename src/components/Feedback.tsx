@@ -1,6 +1,11 @@
-const Feedback = () => {
+interface IFeedbackProps {
+    optionsNo: number;
+    correctNo: number
+}
+
+const Feedback = (props: IFeedbackProps) => {
     return (
-        <>All good!</>
+        <p>{props.optionsNo === props.correctNo ? "The answer is correct!" : `The answer is incorrect! You got ${props.correctNo} out of ${props.optionsNo}. Keep going!`}</p>
     );
 };
 

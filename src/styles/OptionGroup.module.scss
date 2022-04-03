@@ -7,38 +7,78 @@
     border-radius: 100px;
     position: relative;
     z-index: 1;
+
     & > * {
-        padding: 21px 157px 21px 157px;
+        // padding: 21px 157px 21px 157px;
         flex: 1 1 0px;
     }
+
     &.isIncorrect {
         border: 2px solid #f9d29f;
         .option.isSelected {
             color: #9f938b;
         }
 
-        &::before {
+        &.isFirst::before {
             background-color: #f8caa3;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
+        }
+        &.isSecond::before {
+            background-color: #f8caa3;
+            transition: transform 0.2s linear;
+            transform: translateX(100%);
+        }
+        &.isThird::before {
+            background-color: #f8caa3;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
         }
     }
+
     &.isPartialCorrect {
         border: 2px solid #ffffff;
         .option.isSelected {
             color: #e47958;
         }
 
-        &::before {
+        &.isFirst::before {
             background-color: #f2cbbd;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
+        }
+        &.isSecond::before {
+            background-color: #f2cbbd;
+            transition: transform 0.2s linear;
+            transform: translateX(100%);
+        }
+        &.isThird::before {
+            background-color: #f2cbbd;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
         }
     }
+
     &.isCorrect {
         border: 2px solid #fbfbfb;
         .option.isSelected {
             color: white;
         }
 
-        &::before {
+        &.isFirst::before {
             background-color: #a5e7e2;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
+        }
+        &.isSecond::before {
+            background-color: #a5e7e2;
+            transition: transform 0.2s linear;
+            transform: translateX(100%);
+        }
+        &.isThird::before {
+            background-color: #a5e7e2;
+            transition: transform 0.2s linear;
+            transform: translateX(0%);
         }
     }
 
@@ -48,6 +88,9 @@
         background-color: inherit;
         z-index: 100;
         border: 0;
+        font-weight: 700;
+        width: 300px;
+        height: 50px;
     }
 
     &::before {
@@ -62,12 +105,22 @@
         background-color: inherit;
     }
 
-    &.isFirst::before{
-        transition: transform .2s linear;
+    &.isFirst.isCorrect::before {
+    }
+
+    &.isFirst.isCorrect::before {
+    }
+
+    &.isFirst.isCorrect::before {
+    }
+
+    &.isFirst::before {
+        transition: transform 0.2s linear;
         transform: translateX(0%);
     }
+
     &.isSecond::before {
-        transition: transform .2s linear;
+        transition: transform 0.2s linear;
         transform: translateX(100%);
     }
 }

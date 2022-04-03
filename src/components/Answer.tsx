@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IOptionGroup } from "../models/IOptionGroup";
 import { IOverallResult } from "../models/IOverallResult";
 import OptionGroup from "./OptionGroup";
@@ -11,11 +11,20 @@ interface IAnswerProps {
 const Answer = (props: IAnswerProps) => {
     const [currentOptionGroups, setCurrentOptionGroups] = useState<IOptionGroup[]>(props.optionGroups);
 
+    useEffect(() => {
+        setCurrentOptionGroups(props.optionGroups);
+    }, [props.optionGroups]);
+
     const handleOptionGroupChanged = (optionGroup: IOptionGroup) => {
-        const unchangedOptionGroups = currentOptionGroups.filter(op => op.options.every(o => optionGroup.options.indexOf(o) < 0));
-        const newOptionGroups = [...unchangedOptionGroups, optionGroup];
-        props.onAnswerChanged(newOptionGroups);
-        setCurrentOptionGroups(newOptionGroups);
+        const optionGroupsToUpdate = [...currentOptionGroups];
+        optionGroupsToUpdate.forEach((op, index) => {
+            if(op.options.every(o => optionGroup.options.indexOf(o) >= 0)){
+                optionGroupsToUpdate[index] = optionGroup
+            }
+        });
+        
+        props.onAnswerChanged(optionGroupsToUpdate);
+        setCurrentOptionGroups(optionGroupsToUpdate);
     };
     return (
         <>

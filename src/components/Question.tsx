@@ -1,6 +1,10 @@
-const Question = () => {
+interface IQuestionProps {
+    text: string;
+}
+
+const Question = (props: IQuestionProps) => {
     return (
-    <>First question</>
+        <p>{props.text}</p>
     );
 };
 
