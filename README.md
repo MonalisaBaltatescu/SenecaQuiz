@@ -8,7 +8,7 @@ In the project directory, please run:
 
 ### `npm install`
 
-Install all necessary dependences and created node-modules folder.
+Install all necessary dependences and creates node-modules folder.
 
 ### `npm start`
 
