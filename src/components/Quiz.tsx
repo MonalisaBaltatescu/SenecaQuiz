@@ -21,7 +21,6 @@ const Quiz = () => {
                 setQuizState(selectedQuestion);
                 setIsNextQuestionGenerated(true);
                 setOverallResult(IOverallResult.Incorrect);
-
             }, 1000);
             return () => { clearTimeout(timer) };
         }
@@ -44,7 +43,7 @@ const Quiz = () => {
                 <AnswerPanel optionGroups={quizState.currentQuestion.optionGroups}
                     isNextQuestion={isNextQuestionGenerated}
                     overallResult={overallResult}
-                    onNewResultComputed={(overallResult: IOverallResult) => setOverallResult(overallResult)} />
+                    onNewResultComputed={(overallResult: IOverallResult) => {setOverallResult(overallResult); setIsNextQuestionGenerated(false);}} />
                 <Feedback overallResult={overallResult} />
             </div>
         );

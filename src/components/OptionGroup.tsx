@@ -14,7 +14,7 @@ interface IOptionGroupProps {
 
 const OptionGroup = (props: IOptionGroupProps) => {
 
-    const [currentOptionGroup, setCurrentOptionGroup] = useState<IOptionGroup>(props.optionGroup);
+    const [currentOptionGroup, setCurrentOptionGroup] = useState<IOptionGroup>({options: [], selectedOption: "", correctOption: ""});
     const [currentSelectedPosition, setCurrentSelectedPosition] = useState<ISliderPosition>();
 
     useEffect(() => {
@@ -25,19 +25,21 @@ const OptionGroup = (props: IOptionGroupProps) => {
     }, [props.optionGroup, props.isNextQuestion]);
 
     const handleOptionChange = (option: string, index: number) => {
-        setCurrentOptionGroup((previousOptionGroup: IOptionGroup) => {
-            const currentOptionGroup: IOptionGroup = { ...previousOptionGroup, selectedOption: option };
-            setCurrentSelectedPosition(utils.getSliderPosition(index));
-            props.onOptionSelected({ ...previousOptionGroup, selectedOption: option });
-            return currentOptionGroup;
-        });
+        const optionGroup: IOptionGroup = { ...currentOptionGroup, selectedOption: option };
+        setCurrentSelectedPosition(utils.getSliderPosition(index));
+        props.onOptionSelected({ ...optionGroup, selectedOption: option });
+    };
+
+    const hasTwoOptions = () => {
+        return currentOptionGroup.options.length === 2;
     };
 
     return (
-        <div className={`${styles.optionGroup} ${styles[props.overallResult]} ${currentSelectedPosition ? styles[currentSelectedPosition] : ""}`}>
+        <div className={`${styles.optionGroup} ${styles[props.overallResult]} ${currentSelectedPosition ? styles[currentSelectedPosition] : ""} ${hasTwoOptions() ? styles.twoOptions : styles.threeOptions}`}>
             {currentOptionGroup.options.map((option: string, index: number) => {
                 return <button key={index}
                     className={`${styles.option} ${currentOptionGroup.selectedOption === option && styles.isSelected}`}
+                    disabled={props.overallResult === IOverallResult.Correct}
                     onClick={() => handleOptionChange(option, index)}>{option}
                 </button>
             })}

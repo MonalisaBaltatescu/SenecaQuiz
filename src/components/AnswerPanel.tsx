@@ -10,36 +10,31 @@ interface IAnswerProps {
     onNewResultComputed(result: IOverallResult): void
 }
 
-interface IOverallResultState {
-    overallResult: IOverallResult;
-    correctAnswers: number;
-}
-
 const AnswerPanel = (props: IAnswerProps) => {
     const [currentOptionGroups, setCurrentOptionGroups] = useState<IOptionGroup[]>(props.optionGroups);
-    const [overallQuestionResultState, setOverallQuestionResultState] = useState<IOverallResultState>({ overallResult: IOverallResult.Incorrect, correctAnswers: 0 });
+    const [overallQuestionResult, setOverallQuestionResult] = useState<IOverallResult>(IOverallResult.Incorrect);
 
     useEffect(() => {
         setCurrentOptionGroups(props.optionGroups);
-        setOverallQuestionResultState({ overallResult: IOverallResult.Incorrect, correctAnswers: 0 });
     }, [props.optionGroups]);
+
+    useEffect(() => {
+        setOverallQuestionResult(props.overallResult);
+    }, [props.overallResult])
 
     const computeOverallResult = (optionGroups: IOptionGroup[]) => {
         const correctSelected = optionGroups.filter(og => og.correctOption === og.selectedOption);
 
         if (correctSelected.length === optionGroups.length) {
-            setOverallQuestionResultState({ overallResult: IOverallResult.Correct, correctAnswers: correctSelected.length });
             props.onNewResultComputed(IOverallResult.Correct);
             return;
         }
 
         if (correctSelected.length < optionGroups.length && correctSelected.length >= optionGroups.length / 2) {
-            setOverallQuestionResultState({ overallResult: IOverallResult.PartialCorrect, correctAnswers: correctSelected.length });
             props.onNewResultComputed(IOverallResult.PartialCorrect);
             return;
         }
 
-        setOverallQuestionResultState({ overallResult: IOverallResult.Incorrect, correctAnswers: correctSelected.length });
         props.onNewResultComputed(IOverallResult.Incorrect);
     };
 
@@ -53,12 +48,13 @@ const AnswerPanel = (props: IAnswerProps) => {
 
         computeOverallResult(optionGroupsToUpdate);
         setCurrentOptionGroups(optionGroupsToUpdate);
+
     }
 
     return (
         <>
-            {props.optionGroups.map((group: IOptionGroup, index: number) => {
-                return <OptionGroup overallResult={overallQuestionResultState.overallResult}
+            {currentOptionGroups.map((group: IOptionGroup, index: number) => {
+                return <OptionGroup overallResult={overallQuestionResult}
                     optionGroup={group} key={index}
                     isNextQuestion={props.isNextQuestion}
                     onOptionSelected={(optionGroup: IOptionGroup) => handleOptionSelected(optionGroup)} />

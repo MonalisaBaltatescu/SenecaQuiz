@@ -15,10 +15,10 @@ export class utils {
         const questions: IQuestion[] = [
             {
                 question: "Built-in React hooks:", optionGroups: [
-                    { options: ["setState", "useState"], correctOption: "useState", selectedOption: "" },
-                    { options: ["useEffect", "useProps"], correctOption: "useEffect", selectedOption: "" },
-                    { options: ["useFunction", "useCallback"], correctOption: "useCallback", selectedOption: "" },
-                    { options: ["useMemo", "setVariable"], correctOption: "useMemo", selectedOption: "" }
+                    { options: ["setState", "useState", "isState"], correctOption: "useState", selectedOption: "" },
+                    { options: ["useEffect", "useProps", "setEffect"], correctOption: "useEffect", selectedOption: "" },
+                    { options: ["useFunction", "useComponent", "useCallback"], correctOption: "useCallback", selectedOption: "" },
+                    { options: ["useMemo", "useReduce", "setVariable"], correctOption: "useMemo", selectedOption: "" }
                 ]
             },
             {
@@ -32,7 +32,7 @@ export class utils {
                 question: "Select React key concepts:", optionGroups: [
                     { options: ["Virtual DOM", "Running JavaScript in the browser"], correctOption: "Virtual DOM", selectedOption: "" },
                     { options: ["It is all about components", "Bundles .js files for performance"], correctOption: "It is all about components", selectedOption: "" },
-                    { options: ["Statefull and Stateless components", "HTML is written in separate files"], correctOption: "Statefull and Stateless components", selectedOption: "" },
+                    { options: ["Stateful and Stateless components", "HTML is written in dedicated files"], correctOption: "Stateful and Stateless components", selectedOption: "" },
                 ]
             }
         ];
