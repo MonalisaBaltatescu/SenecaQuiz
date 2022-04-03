@@ -1,56 +1,36 @@
-import Answer from "./Answer";
+import AnswerPanel from "./AnswerPanel";
 import Feedback from "./Feedback";
 import Question from "./Question";
 import styles from "../styles/Quiz.module.scss";
 import { useEffect, useMemo, useState } from "react";
 import { IOverallResult } from "../models/IOverallResult";
-import { IOptionGroup } from "../models/IOptionGroup";
 import { Randomizer } from "../utils/Randomizer";
 import { IQuizStatus } from "../models/IQuizStatus";
 import { IQuiz } from "../models/IQuiz";
 
-interface IOverallResultState {
-    overallResult: IOverallResult;
-    correctAnswers: number;
-}
-
 const Quiz = () => {
     const random = useMemo(() => { return new Randomizer(); }, []);
-    const [overallResultState, setOverallResultState] = useState<IOverallResultState>({ overallResult: IOverallResult.Incorrect, correctAnswers: 0 });
     const [quizState, setQuizState] = useState<IQuiz>({ currentQuestion: undefined, status: IQuizStatus.InProgress });
+    const [overallResult, setOverallResult] = useState<IOverallResult>(IOverallResult.Incorrect);
+    const [isNextQuestionGenerated, setIsNextQuestionGenerated] = useState<boolean>(false);
 
     useEffect(() => {
-        if (overallResultState.overallResult === IOverallResult.Correct) {
-            const selectedQuestion: IQuiz = random.getRandomQuiz();
-            setQuizState(selectedQuestion);
-            setOverallResultState({ overallResult: IOverallResult.Incorrect, correctAnswers: 0 });
+        if (overallResult === IOverallResult.Correct) {
+            const timer = setTimeout(() => {
+                const selectedQuestion: IQuiz = random.getRandomQuiz();
+                setQuizState(selectedQuestion);
+                setIsNextQuestionGenerated(true);
+                setOverallResult(IOverallResult.Incorrect);
+
+            }, 1000);
+            return () => { clearTimeout(timer) };
         }
-    }, [overallResultState.overallResult, random]);
+
+    }, [overallResult, random]);
 
     useEffect(() => {
         setQuizState(random.getRandomQuiz());
     }, [random]);
-
-    const computeOverallResult = (optionGroups: IOptionGroup[]) => {
-        const correctSelected = optionGroups.filter(og => og.correctOption === og.selectedOption);
-
-        if (correctSelected.length === optionGroups.length) {
-            setOverallResultState({ overallResult: IOverallResult.Correct, correctAnswers: correctSelected.length });
-            return;
-        }
-
-        if (correctSelected.length < optionGroups.length && correctSelected.length >= optionGroups.length / 2) {
-            setOverallResultState({ overallResult: IOverallResult.PartialCorrect, correctAnswers: correctSelected.length });
-            return;
-        }
-
-        setOverallResultState({ overallResult: IOverallResult.Incorrect, correctAnswers: correctSelected.length });
-
-    };
-
-    const handleAnswerChange = (optionGroups: IOptionGroup[]) => {
-        computeOverallResult(optionGroups);
-    };
 
     if (!quizState.currentQuestion) {
         return quizState.status === IQuizStatus.NoQuestionsAvailable
@@ -59,14 +39,16 @@ const Quiz = () => {
     } else {
 
         return (
-            <div className={`${styles.quizContainer} ${styles[overallResultState.overallResult]}`}>
+            <div className={`${styles.quizContainer} ${styles[overallResult]}`}>
                 <Question text={quizState.currentQuestion.question} />
-                <Answer optionGroups={quizState.currentQuestion.optionGroups} onAnswerChanged={handleAnswerChange} overallResult={overallResultState.overallResult} />
-                <Feedback correctNo={overallResultState.correctAnswers} optionsNo={quizState.currentQuestion.optionGroups.length} />
+                <AnswerPanel optionGroups={quizState.currentQuestion.optionGroups}
+                    isNextQuestion={isNextQuestionGenerated}
+                    overallResult={overallResult}
+                    onNewResultComputed={(overallResult: IOverallResult) => setOverallResult(overallResult)} />
+                <Feedback overallResult={overallResult} />
             </div>
         );
     }
-
 };
 
 export default Quiz;

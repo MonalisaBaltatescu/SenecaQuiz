@@ -104,23 +104,4 @@
         height: 100%;
         background-color: inherit;
     }
-
-    &.isFirst.isCorrect::before {
-    }
-
-    &.isFirst.isCorrect::before {
-    }
-
-    &.isFirst.isCorrect::before {
-    }
-
-    &.isFirst::before {
-        transition: transform 0.2s linear;
-        transform: translateX(0%);
-    }
-
-    &.isSecond::before {
-        transition: transform 0.2s linear;
-        transform: translateX(100%);
-    }
 }

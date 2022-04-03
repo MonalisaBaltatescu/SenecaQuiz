@@ -8,6 +8,7 @@ import { utils } from "../utils/utils";
 interface IOptionGroupProps {
     optionGroup: IOptionGroup;
     overallResult: IOverallResult;
+    isNextQuestion: boolean;
     onOptionSelected(optionGroup: IOptionGroup): void;
 }
 
@@ -16,10 +17,12 @@ const OptionGroup = (props: IOptionGroupProps) => {
     const [currentOptionGroup, setCurrentOptionGroup] = useState<IOptionGroup>(props.optionGroup);
     const [currentSelectedPosition, setCurrentSelectedPosition] = useState<ISliderPosition>();
 
-
     useEffect(() => {
         setCurrentOptionGroup(props.optionGroup);
-    }, [props.optionGroup]);
+        if (props.isNextQuestion) {
+            setCurrentSelectedPosition(undefined);
+        }
+    }, [props.optionGroup, props.isNextQuestion]);
 
     const handleOptionChange = (option: string, index: number) => {
         setCurrentOptionGroup((previousOptionGroup: IOptionGroup) => {
@@ -31,9 +34,12 @@ const OptionGroup = (props: IOptionGroupProps) => {
     };
 
     return (
-        <div className={`${styles.optionGroup} ${styles[props.overallResult]} ${currentSelectedPosition ? styles[currentSelectedPosition] :  ""}`}>
+        <div className={`${styles.optionGroup} ${styles[props.overallResult]} ${currentSelectedPosition ? styles[currentSelectedPosition] : ""}`}>
             {currentOptionGroup.options.map((option: string, index: number) => {
-                return <button key={index} className={`${styles.option} ${currentOptionGroup.selectedOption === option && styles.isSelected}`} onClick={() => handleOptionChange(option, index)}>{option}</button>
+                return <button key={index}
+                    className={`${styles.option} ${currentOptionGroup.selectedOption === option && styles.isSelected}`}
+                    onClick={() => handleOptionChange(option, index)}>{option}
+                </button>
             })}
         </div>
     );

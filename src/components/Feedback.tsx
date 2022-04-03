@@ -1,11 +1,12 @@
+import { IOverallResult } from "../models/IOverallResult";
+
 interface IFeedbackProps {
-    optionsNo: number;
-    correctNo: number
+    overallResult: IOverallResult;
 }
 
 const Feedback = (props: IFeedbackProps) => {
     return (
-        <p>{props.optionsNo === props.correctNo ? "The answer is correct!" : `The answer is incorrect! You got ${props.correctNo} out of ${props.optionsNo}. Keep going!`}</p>
+        <p>{(props.overallResult === IOverallResult.Incorrect || props.overallResult === IOverallResult.PartialCorrect) ? "The answer is incorrect!" : `The answer is correct!`}</p>
     );
 };
 
